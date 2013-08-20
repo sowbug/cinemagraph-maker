@@ -1,3 +1,20 @@
-#!/bin/bash
+#!/usr/bin/python
 
-convert -delay 13 -loop 0 out/sframe-*.gif out/block_erupter.gif
+import os
+import random
+
+cmds = []
+time_left = 1000
+is_light_on = False
+while time_left > 0:
+  if is_light_on:
+    delay = random.randint(20, 200)
+    cmds.append("-delay %d out/frame-0.gif" % delay)
+    is_light_on = False
+  else:
+    delay = 10
+    cmds.append("-delay %d out/frame-%d.gif" % (delay, random.randint(1, 4)))
+    is_light_on = True
+  time_left -= delay
+
+os.system("convert -loop 0 %s out/block_erupter.gif" % " ".join(cmds))
