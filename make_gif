@@ -1,0 +1,3 @@
+#!/bin/bash
+
+convert -delay 13 -loop 0 out/sframe-*.gif out/block_erupter.gif

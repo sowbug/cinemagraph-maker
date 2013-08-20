@@ -1,0 +1,44 @@
+#!/bin/bash
+
+rm -rf out/
+mkdir -p out/
+
+for i in $(seq 0 4)
+do
+    convert original/Block-Erupter-$i.png light-big-$i.gif
+    convert -crop 960x540+57+34 +repage light-big-$i.gif light-cropped-$i.gif
+    convert light-cropped-$i.gif -resize 480x270 light-$i.gif
+done
+
+cp light-0.gif frame-0.gif
+cp frame-0.gif out/
+
+rm -f crop-*.gif
+
+X=271
+Y=101
+convert light-1.gif -crop 8x8+$X+$Y +repage crop-1.gif
+convert frame-0.gif crop-1.gif -geometry +$X+$Y -compose over \
+    -composite out/frame-1.gif
+
+X=290
+Y=105
+convert light-2.gif -crop 8x8+$X+$Y +repage crop-2.gif
+convert frame-0.gif crop-2.gif -geometry +$X+$Y -compose over \
+    -composite out/frame-2.gif
+
+X=310
+Y=108
+convert light-3.gif -crop 8x8+$X+$Y +repage crop-3.gif
+convert frame-0.gif crop-3.gif -geometry +$X+$Y -compose over \
+    -composite out/frame-3.gif
+
+X=328
+Y=112
+convert light-4.gif -crop 8x8+$X+$Y +repage crop-4.gif
+convert frame-0.gif crop-4.gif -geometry +$X+$Y -compose over \
+    -composite out/frame-4.gif
+
+rm crop-*.gif
+rm light-*.gif
+rm frame-0.gif
